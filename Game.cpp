@@ -21,6 +21,7 @@ void Game::Run()
 
 void Game::Draw()
 {
+	m_map.Draw(m_window);
 }
 
 void Game::MakeMove()

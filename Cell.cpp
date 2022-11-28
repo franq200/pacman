@@ -1,10 +1,10 @@
 #include "Cell.h"
 #include "Helper.h"
 
-Cell::Cell(sf::Vector2f pos, State state)
+Cell::Cell(int xPos, int yPos, State state)
 {
 	setSize({ static_cast<float>(size::cellSize), static_cast<float>(size::cellSize) });
-	setPosition(pos);
+	setPosition({ static_cast<float>(xPos),static_cast<float>(yPos) });
 	if (state == State::free)
 	{
 		setFillColor(sf::Color::Green);
@@ -13,4 +13,6 @@ Cell::Cell(sf::Vector2f pos, State state)
 	{
 		setFillColor(sf::Color::Red);
 	}
+	setOutlineColor(sf::Color::Black);
+	setOutlineThickness(3.f);
 }

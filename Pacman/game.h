@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <string>
 #include "Pacman.h"
 
 enum class GameState

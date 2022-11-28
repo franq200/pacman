@@ -10,6 +10,7 @@ enum class State
 class Cell : public sf::RectangleShape
 {
 public:
-	Cell(sf::Vector2f pos, State state);
+	Cell() = default;
+	Cell(int xPos, int yPos, State state);
 private:
 };

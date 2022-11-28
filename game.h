@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Pacman.h"
+#include "Map.h"
 
 enum class GameState
 {
@@ -21,5 +22,6 @@ private:
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
 	Pacman m_pacman;
+	Map m_map;
 	sf::Clock m_moveClock;
 };
