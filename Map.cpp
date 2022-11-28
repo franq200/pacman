@@ -31,21 +31,21 @@ void Map::ReadMap(std::string path)
 		{
 			if (line[i] == 'p')
 			{
-				row.push_back(Cell(row.size() * size::cellSize, m_map.size() * size::cellSize, State::free));
+				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::free));
 				m_pacmanSpawn = { static_cast<float>(row.size() * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) };
 			}
 			else if (line[i] == 'g')
 			{
-				row.push_back(Cell(row.size() * size::cellSize, m_map.size() * size::cellSize, State::free));
+				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::free));
 				m_ghostsSpawn.push_back({ static_cast<float>(row.size() * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) });
 			}
 			else if (line[i] == '*')
 			{
-				row.push_back(Cell(row.size() * size::cellSize, m_map.size() * size::cellSize, State::blocked));
+				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::blocked));
 			}
 			else
 			{
-				row.push_back(Cell(row.size() * size::cellSize, m_map.size() * size::cellSize, State::free));
+				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::free));
 			}
 		}
 		m_map.push_back(row);
