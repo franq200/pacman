@@ -34,3 +34,6 @@
 *.user
 *.vs
 x64
+
+# Visual Studio project file for different version
+.vcxproj
