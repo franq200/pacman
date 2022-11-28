@@ -80,6 +80,11 @@ void Game::CreateMaps(const std::string& path)
 		for (auto const& file : std::filesystem::directory_iterator{ mapsFolder })
 		{
 			auto fileName = file.path().filename();
+			std::regex regex("^ map(\d) + .txt$");
+			if (std::regex_search(fileName.string(), regex))
+			{
+
+			}
 			// map1.txt map100.txt
 
 		}
