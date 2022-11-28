@@ -27,7 +27,7 @@ void Game::Run()
 
 void Game::Draw()
 {
-	m_map[m_currentMap].Draw(m_window);
+	m_maps[m_currentMap].Draw(m_window);
 }
 
 void Game::MakeMove()
@@ -80,13 +80,13 @@ void Game::CreateMaps(const std::string& path)
 		for (auto const& file : std::filesystem::directory_iterator{ mapsFolder })
 		{
 			auto fileName = file.path().filename();
-			std::regex regex("^ map(\d) + .txt$");
+			std::regex regex("^map(\\d)+.txt$");
 			if (std::regex_search(fileName.string(), regex))
 			{
-
+				auto& newMap = m_maps.emplace_back();
+				newMap.ReadMap(file.path().string());
 			}
-			// map1.txt map100.txt
-
+			// map123.txt
 		}
 	}
 	catch (const std::exception& e)

@@ -23,7 +23,7 @@ private:
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
 	Pacman m_pacman;
-	std::vector<Map> m_map;
+	std::vector<Map> m_maps;
 	sf::Clock m_moveClock;
 
 	size_t m_currentMap = 0;
