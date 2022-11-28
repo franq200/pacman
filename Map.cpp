@@ -2,11 +2,6 @@
 #include "Helper.h"
 #include <fstream>
 
-void Map::Init(std::string path)
-{
-	ReadMap(path);
-}
-
 void Map::Draw(sf::RenderWindow& window)
 {
 	for (int row = 0; row < m_map.size(); ++row)

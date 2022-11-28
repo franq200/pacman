@@ -1,9 +1,15 @@
 #include "Game.h"
 #include "Helper.h"
+#include <filesystem>
+#include <regex>
+#include <string>
+#include <iostream>
 
 void Game::Init(std::string path)
 {
 	m_window.create(sf::VideoMode(size::windowSize, size::windowSize), "Pacman");
+
+	CreateMaps(path);
 }
 
 void Game::Run()
@@ -21,7 +27,7 @@ void Game::Run()
 
 void Game::Draw()
 {
-	m_map.Draw(m_window);
+	m_map[m_currentMap].Draw(m_window);
 }
 
 void Game::MakeMove()
@@ -63,4 +69,23 @@ void Game::LoadTextures()
 {
 	textures::ghostTexture.loadFromFile("ghost.png");
 	textures::pacmanTexture.loadFromFile("pacman.png");
+}
+
+void Game::CreateMaps(const std::string& path)
+{
+	std::filesystem::path mapsFolder(path);
+
+	try
+	{
+		for (auto const& file : std::filesystem::directory_iterator{ mapsFolder })
+		{
+			auto fileName = file.path().filename();
+			// map1.txt map100.txt
+
+		}
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << "Error during process map with parent path " << mapsFolder << "." << e.what();
+	}
 }

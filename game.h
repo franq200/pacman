@@ -18,10 +18,13 @@ private:
 	void MakeMove();
 	void TryChangeGameMode();
 	void LoadTextures();
+	void CreateMaps(const std::string& path);
 
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
 	Pacman m_pacman;
-	Map m_map;
+	std::vector<Map> m_map;
 	sf::Clock m_moveClock;
+
+	size_t m_currentMap = 0;
 };
