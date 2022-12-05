@@ -44,7 +44,7 @@ void Game::InitObjects()
 	{
 		m_ghosts[i].setPosition(ghostsSpawns[i]);
 		m_ghosts[i].setTexture(&textures::ghostTexture);
-		m_ghosts[i].setSize({size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness});
+		m_ghosts[i].setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
 	}
 }
 
@@ -87,23 +87,35 @@ void Game::MakeMove()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			m_pacman.MakeMove(Direction::up);
-			m_moveClock.restart();
+			if (IsPacmanCollision(Direction::up))
+			{
+				m_pacman.MakeMove(Direction::up);
+				m_moveClock.restart();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			m_pacman.MakeMove(Direction::right);
-			m_moveClock.restart();
+			if (IsPacmanCollision(Direction::right))
+			{
+				m_pacman.MakeMove(Direction::right);
+				m_moveClock.restart();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			m_pacman.MakeMove(Direction::left);
-			m_moveClock.restart();
+			if (IsPacmanCollision(Direction::left))
+			{
+				m_pacman.MakeMove(Direction::left);
+				m_moveClock.restart();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			m_pacman.MakeMove(Direction::down);
-			m_moveClock.restart();
+			if (IsPacmanCollision(Direction::down))
+			{
+				m_pacman.MakeMove(Direction::down);
+				m_moveClock.restart();
+			}
 		}
 	}
 }
@@ -169,4 +181,49 @@ void Game::CreateMaps(const std::string& path)
 	{
 		std::cout << "Error during process map with parent path " << mapsFolder << "." << e.what();
 	}
+}
+
+bool Game::IsPacmanCollision(Direction direction)
+{
+	if (direction == Direction::up)
+	{
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().y - size::cellSize };
+		if (pacmanNextPos.y == 0)
+		{
+			return true;
+		}
+		std::pair<std::size_t, std::size_t> indexPacmanPos = position::GetMapIndexesFromPosition(pacmanNextPos);
+		return m_maps[m_mapNum].IsBlockedCell(indexPacmanPos.first, indexPacmanPos.second);
+	}
+	else if (direction == Direction::down)
+	{
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().y + size::cellSize };
+		if (pacmanNextPos.y == 0)
+		{
+			return true;
+		}
+		std::pair<std::size_t, std::size_t> indexPacmanPos = position::GetMapIndexesFromPosition(pacmanNextPos);
+		return m_maps[m_mapNum].IsBlockedCell(indexPacmanPos.first, indexPacmanPos.second);
+	}
+	else if (direction == Direction::right)
+	{
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().x + size::cellSize };
+		if (pacmanNextPos.x == 0)
+		{
+			return true;
+		}
+		std::pair<std::size_t, std::size_t> indexPacmanPos = position::GetMapIndexesFromPosition(pacmanNextPos);
+		return m_maps[m_mapNum].IsBlockedCell(indexPacmanPos.first, indexPacmanPos.second);
+	}
+	else if (direction == Direction::left)
+	{
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().x - size::cellSize };
+		if (pacmanNextPos.x == 0)
+		{
+			return true;
+		}
+		std::pair<std::size_t, std::size_t> indexPacmanPos = position::GetMapIndexesFromPosition(pacmanNextPos);
+		return m_maps[m_mapNum].IsBlockedCell(indexPacmanPos.first, indexPacmanPos.second);
+	}
+	return false;
 }

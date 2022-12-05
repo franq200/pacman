@@ -25,7 +25,7 @@ sf::Vector2f Map::GetPacmanSpawn() const
 
 bool Map::IsBlockedCell(std::size_t x, std::size_t y) const
 {
-	return m_map[y][x].GetState() == State::blocked;
+	return m_map[x][y].GetState() == State::blocked;
 }
 
 void Map::ReadMap(std::string path)
