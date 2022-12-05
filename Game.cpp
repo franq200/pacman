@@ -87,7 +87,7 @@ void Game::MakeMove()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			if (IsPacmanCollision(Direction::up))
+			if (!IsPacmanCollision(Direction::up))
 			{
 				m_pacman.MakeMove(Direction::up);
 				m_moveClock.restart();
@@ -95,7 +95,7 @@ void Game::MakeMove()
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			if (IsPacmanCollision(Direction::right))
+			if (!IsPacmanCollision(Direction::right))
 			{
 				m_pacman.MakeMove(Direction::right);
 				m_moveClock.restart();
@@ -103,7 +103,7 @@ void Game::MakeMove()
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			if (IsPacmanCollision(Direction::left))
+			if (!IsPacmanCollision(Direction::left))
 			{
 				m_pacman.MakeMove(Direction::left);
 				m_moveClock.restart();
@@ -111,7 +111,7 @@ void Game::MakeMove()
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			if (IsPacmanCollision(Direction::down))
+			if (!IsPacmanCollision(Direction::down))
 			{
 				m_pacman.MakeMove(Direction::down);
 				m_moveClock.restart();
@@ -188,7 +188,7 @@ bool Game::IsPacmanCollision(Direction direction)
 	if (direction == Direction::up)
 	{
 		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().y - size::cellSize };
-		if (pacmanNextPos.y == 0)
+		if (pacmanNextPos.y < 0)
 		{
 			return true;
 		}
@@ -198,7 +198,7 @@ bool Game::IsPacmanCollision(Direction direction)
 	else if (direction == Direction::down)
 	{
 		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().y + size::cellSize };
-		if (pacmanNextPos.y == 0)
+		if (pacmanNextPos.y > size::windowSize - size::cellSize)
 		{
 			return true;
 		}
@@ -207,8 +207,8 @@ bool Game::IsPacmanCollision(Direction direction)
 	}
 	else if (direction == Direction::right)
 	{
-		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().x + size::cellSize };
-		if (pacmanNextPos.x == 0)
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x + size::cellSize, m_pacman.getPosition().y};
+		if (pacmanNextPos.x > size::windowSize - size::cellSize)
 		{
 			return true;
 		}
@@ -217,8 +217,8 @@ bool Game::IsPacmanCollision(Direction direction)
 	}
 	else if (direction == Direction::left)
 	{
-		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x, m_pacman.getPosition().x - size::cellSize };
-		if (pacmanNextPos.x == 0)
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x - size::cellSize, m_pacman.getPosition().y};
+		if (pacmanNextPos.x < 0)
 		{
 			return true;
 		}
