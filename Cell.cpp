@@ -14,5 +14,5 @@ Cell::Cell(int xPos, int yPos, State state)
 		setFillColor(sf::Color::Red);
 	}
 	setOutlineColor(sf::Color::Black);
-	setOutlineThickness(3.f);
+	setOutlineThickness(size::cellOutlineThickness);
 }

@@ -6,6 +6,7 @@ namespace size
 	extern int windowSize;
 	extern int cellsNum;
 	extern int cellSize;
+	extern float cellOutlineThickness;
 }
 
 namespace speed

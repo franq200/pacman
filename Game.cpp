@@ -11,6 +11,9 @@ void Game::Init(std::string path)
 
 	CreateMaps(path);
 	m_window.setFramerateLimit(60);
+
+	LoadTextures();
+	InitObjects();
 }
 
 void Game::Run()
@@ -27,6 +30,22 @@ void Game::Run()
 
 	MakeEventAction();
 	Draw();
+}
+
+void Game::InitObjects()
+{
+	m_pacman.setPosition(m_maps[m_mapNum].GetPacmanSpawn());
+	m_pacman.setTexture(&textures::pacmanTexture);
+	m_pacman.setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
+
+	std::vector<sf::Vector2f> ghostsSpawns = m_maps[m_mapNum].GetGhostsSpawns();
+	m_ghosts.resize(ghostsSpawns.size());
+	for (int i = 0; i < ghostsSpawns.size(); ++i)
+	{
+		m_ghosts[i].setPosition(ghostsSpawns[i]);
+		m_ghosts[i].setTexture(&textures::ghostTexture);
+		m_ghosts[i].setSize({size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness});
+	}
 }
 
 void Game::MakeEventAction()
@@ -46,6 +65,14 @@ void Game::Draw()
 {
 	m_window.clear();
 	m_maps[m_currentMap].Draw(m_window);
+	if (m_gameState == GameState::playing)
+	{
+		for (int i = 0; i < m_ghosts.size(); ++i)
+		{
+			m_window.draw(m_ghosts[i]);
+		}
+		m_window.draw(m_pacman);
+	}
 	m_window.display();
 }
 

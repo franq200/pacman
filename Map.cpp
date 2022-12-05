@@ -13,6 +13,16 @@ void Map::Draw(sf::RenderWindow& window)
 	}
 }
 
+std::vector<sf::Vector2f> Map::GetGhostsSpawns() const
+{
+	return m_ghostsSpawn;
+}
+
+sf::Vector2f Map::GetPacmanSpawn() const
+{
+	return m_pacmanSpawn;
+}
+
 void Map::ReadMap(std::string path)
 {
 	std::ifstream file;
@@ -27,12 +37,12 @@ void Map::ReadMap(std::string path)
 			if (line[i] == 'p')
 			{
 				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::free));
-				m_pacmanSpawn = { static_cast<float>(row.size() * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) };
+				m_pacmanSpawn = { static_cast<float>((row.size() - 1) * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) };
 			}
 			else if (line[i] == 'g')
 			{
 				row.push_back(Cell(static_cast<int>(row.size()) * size::cellSize, static_cast<int>(m_map.size()) * size::cellSize, State::free));
-				m_ghostsSpawn.push_back({ static_cast<float>(row.size() * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) });
+				m_ghostsSpawn.push_back({ static_cast<float>((row.size() - 1) * size::cellSize), static_cast<float>(m_map.size() * size::cellSize) });
 			}
 			else if (line[i] == '*')
 			{

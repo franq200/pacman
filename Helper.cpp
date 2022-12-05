@@ -5,6 +5,7 @@ namespace size
 	int windowSize = 800;
 	int cellsNum = 15;
 	int cellSize = windowSize / cellsNum;
+	float cellOutlineThickness = 3.f;
 }
 
 namespace speed
