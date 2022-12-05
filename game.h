@@ -14,9 +14,12 @@ public:
 	void Init(std::string path);
 	void Run();
 	void Draw();
+	bool IsRunning() const;
 private:
+	void MakeEventAction();
 	void MakeMove();
 	void TryChangeGameMode();
+	void TryChangeMap();
 	void LoadTextures();
 	void CreateMaps(const std::string& path);
 
@@ -25,6 +28,8 @@ private:
 	Pacman m_pacman;
 	std::vector<Map> m_maps;
 	sf::Clock m_moveClock;
+	int m_mapNum = 0;
+	bool m_running = true;
 
 	size_t m_currentMap = 0;
 };

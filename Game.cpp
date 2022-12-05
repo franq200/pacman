@@ -17,6 +17,7 @@ void Game::Run()
 	if (m_gameState == GameState::menu)
 	{
 		TryChangeGameMode();
+		TryChangeMap();
 	}
 	else
 	{
@@ -25,9 +26,32 @@ void Game::Run()
 	Draw();
 }
 
+void Game::MakeEventAction()
+{
+	sf::Event event;
+	while (m_window.pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+		{
+			m_window.close();
+			m_running = false;
+		}
+	}
+}
+
 void Game::Draw()
 {
-	m_maps[m_currentMap].Draw(m_window);
+	m_window.clear();
+	for (int i = 0; i < m_maps.size(); ++i)
+	{
+		m_maps[m_currentMap].Draw(m_window);
+	}
+	m_window.display();
+}
+
+bool Game::IsRunning() const
+{
+	return m_running;
 }
 
 void Game::MakeMove()
@@ -62,6 +86,33 @@ void Game::TryChangeGameMode()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
 		m_gameState = GameState::playing;
+	}
+}
+
+void Game::TryChangeMap()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		if (m_mapNum == 0)
+		{
+			m_mapNum = m_maps.size();
+		}
+		else
+		{
+			m_mapNum--;
+		}
+	}
+
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		if (m_mapNum == m_maps.size())
+		{
+			m_mapNum = 0;
+		}
+		else
+		{
+			m_mapNum++;
+		}
 	}
 }
 

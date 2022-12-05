@@ -5,11 +5,15 @@
 int main(int argc, char** argv)
 {
     Game game;
-
+    
     std::filesystem::path path(*argv);
     path = path.parent_path();
     path += "\\res\\maps";
 
     game.Init(path.string());
+    while (game.IsRunning())
+    {
+        game.Run();
+    }
     return 0;
 }
