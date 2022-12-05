@@ -10,7 +10,9 @@ enum class State
 class Cell : public sf::RectangleShape
 {
 public:
-	Cell() = default;
 	Cell(int xPos, int yPos, State state);
+
+	State GetState() const;
 private:
+	State m_state;
 };
