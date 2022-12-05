@@ -10,6 +10,7 @@ void Game::Init(std::string path)
 	m_window.create(sf::VideoMode(size::windowSize, size::windowSize), "Pacman");
 
 	CreateMaps(path);
+	m_window.setFramerateLimit(60);
 }
 
 void Game::Run()
@@ -23,6 +24,8 @@ void Game::Run()
 	{
 		MakeMove();
 	}
+
+	MakeEventAction();
 	Draw();
 }
 
@@ -42,10 +45,7 @@ void Game::MakeEventAction()
 void Game::Draw()
 {
 	m_window.clear();
-	for (int i = 0; i < m_maps.size(); ++i)
-	{
-		m_maps[m_currentMap].Draw(m_window);
-	}
+	m_maps[m_currentMap].Draw(m_window);
 	m_window.display();
 }
 
@@ -95,14 +95,13 @@ void Game::TryChangeMap()
 	{
 		if (m_mapNum == 0)
 		{
-			m_mapNum = m_maps.size();
+			m_mapNum = static_cast<int>(m_maps.size());
 		}
 		else
 		{
 			m_mapNum--;
 		}
 	}
-
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		if (m_mapNum == m_maps.size())
@@ -137,7 +136,6 @@ void Game::CreateMaps(const std::string& path)
 				auto& newMap = m_maps.emplace_back();
 				newMap.ReadMap(file.path().string());
 			}
-			// map123.txt
 		}
 	}
 	catch (const std::exception& e)
