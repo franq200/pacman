@@ -26,6 +26,11 @@ void Game::Run()
 	else
 	{
 		MakeMove();
+		if (IsPacmanCollisionWithGhost())
+		{
+			m_gameState = GameState::menu;
+			Restart();
+		}
 	}
 
 	MakeEventAction();
@@ -226,4 +231,27 @@ bool Game::IsPacmanCollision(Direction direction)
 		return m_maps[m_mapNum].IsBlockedCell(indexPacmanPos.first, indexPacmanPos.second);
 	}
 	return false;
+}
+
+bool Game::IsPacmanCollisionWithGhost()
+{
+	for (int i = 0; i < m_ghosts.size(); ++i)
+	{
+		if (m_ghosts[i].getPosition() == m_pacman.getPosition())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void Game::Restart()
+{
+	m_pacman.setPosition(m_maps[m_mapNum].GetPacmanSpawn());
+	std::vector<sf::Vector2f> ghostsSpawns = m_maps[m_mapNum].GetGhostsSpawns();
+	for (int i = 0; i < m_ghosts.size(); ++i)
+	{
+		m_ghosts[i].setPosition(ghostsSpawns[i]);
+	}
+
 }

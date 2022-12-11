@@ -25,6 +25,8 @@ private:
 	void LoadTextures();
 	void CreateMaps(const std::string& path);
 	bool IsPacmanCollision(Direction);
+	bool IsPacmanCollisionWithGhost();
+	void Restart();
 
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
