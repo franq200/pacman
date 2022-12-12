@@ -2,15 +2,19 @@
 #include <filesystem>
 #include "game.h"
 
-int main(int argc, char** argv)
+std::string CreateBasePath(char** argv)
 {
-    Game game;
-    
     std::filesystem::path path(*argv);
     path = path.parent_path();
     path += "\\res\\maps";
+    return path.string();
+}
 
-    game.Init(path.string());
+int main(int argc, char** argv)
+{
+    Game game;
+  
+    game.Init(CreateBasePath(argv));
     while (game.IsRunning())
     {
         game.Run();
