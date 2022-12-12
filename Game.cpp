@@ -139,7 +139,7 @@ void Game::TryChangeMap()
 	{
 		if (m_mapNum == 0)
 		{
-			m_mapNum = static_cast<int>(m_maps.size());
+			m_mapNum = static_cast<int>(m_maps.size() - 1);
 		}
 		else
 		{
@@ -148,7 +148,7 @@ void Game::TryChangeMap()
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		if (m_mapNum == m_maps.size())
+		if (m_mapNum == m_maps.size() - 1)
 		{
 			m_mapNum = 0;
 		}
