@@ -13,7 +13,7 @@ void Map::Draw(sf::RenderWindow& window)
 	}
 }
 
-std::vector<sf::Vector2f> Map::GetGhostsSpawns() const
+const std::vector<sf::Vector2f>& Map::GetGhostsSpawns() const
 {
 	return m_ghostsSpawn;
 }

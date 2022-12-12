@@ -5,25 +5,22 @@
 #include <string>
 #include <iostream>
 
-void Game::Init(std::string path)
+const std::string GameTitle = "Pacman";
+
+void Game::Init(const std::string& path)
 {
-	m_window.create(sf::VideoMode(size::windowSize, size::windowSize), "Pacman");
-
+	m_window.create(sf::VideoMode(size::windowSize, size::windowSize), GameTitle);
 	CreateMaps(path);
-	m_window.setFramerateLimit(60);
-
 	LoadTextures();
 	InitObjects();
+	m_window.setFramerateLimit(60);
 }
 
 void Game::Run()
 {
-	if (m_gameState == GameState::menu)
+	switch (m_gameState)
 	{
-		TryChangeGameMode();
-		TryChangeMap();
-	}
-	else
+	case GameState::playing:
 	{
 		MakeMove();
 		if (IsPacmanCollisionWithGhost())
@@ -31,6 +28,14 @@ void Game::Run()
 			m_gameState = GameState::menu;
 			Restart();
 		}
+		break;
+	}
+	case GameState::menu:
+	{
+		TryChangeGameMode();
+		TryChangeMap();
+		break;
+	}
 	}
 
 	MakeEventAction();
@@ -39,17 +44,24 @@ void Game::Run()
 
 void Game::InitObjects()
 {
+	InitPacman();
+	InitGhosts();
+}
+
+void Game::InitPacman()
+{
 	m_pacman.setPosition(m_maps[m_mapNum].GetPacmanSpawn());
 	m_pacman.setTexture(&textures::pacmanTexture);
 	m_pacman.setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
+}
 
-	std::vector<sf::Vector2f> ghostsSpawns = m_maps[m_mapNum].GetGhostsSpawns();
+void Game::InitGhosts()
+{
+	const std::vector<sf::Vector2f>& ghostsSpawns = m_maps[m_mapNum].GetGhostsSpawns();
 	m_ghosts.resize(ghostsSpawns.size());
 	for (int i = 0; i < ghostsSpawns.size(); ++i)
 	{
-		m_ghosts[i].setPosition(ghostsSpawns[i]);
-		m_ghosts[i].setTexture(&textures::ghostTexture);
-		m_ghosts[i].setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
+		m_ghosts[i].Init(ghostsSpawns[i]);
 	}
 }
 
@@ -188,7 +200,7 @@ void Game::CreateMaps(const std::string& path)
 	}
 }
 
-bool Game::IsPacmanCollision(Direction direction)
+bool Game::IsPacmanCollision(Direction direction) const
 {
 	if (direction == Direction::up)
 	{
@@ -212,7 +224,7 @@ bool Game::IsPacmanCollision(Direction direction)
 	}
 	else if (direction == Direction::right)
 	{
-		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x + size::cellSize, m_pacman.getPosition().y};
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x + size::cellSize, m_pacman.getPosition().y };
 		if (pacmanNextPos.x > size::windowSize - size::cellSize)
 		{
 			return true;
@@ -222,7 +234,7 @@ bool Game::IsPacmanCollision(Direction direction)
 	}
 	else if (direction == Direction::left)
 	{
-		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x - size::cellSize, m_pacman.getPosition().y};
+		sf::Vector2f pacmanNextPos = { m_pacman.getPosition().x - size::cellSize, m_pacman.getPosition().y };
 		if (pacmanNextPos.x < 0)
 		{
 			return true;
@@ -233,7 +245,7 @@ bool Game::IsPacmanCollision(Direction direction)
 	return false;
 }
 
-bool Game::IsPacmanCollisionWithGhost()
+bool Game::IsPacmanCollisionWithGhost() const
 {
 	for (int i = 0; i < m_ghosts.size(); ++i)
 	{

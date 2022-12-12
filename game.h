@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "Ghost.h"
 
-enum class GameState
+enum class GameState : std::uint8_t
 {
 	playing = 0,
 	menu
@@ -12,21 +12,23 @@ enum class GameState
 class Game
 {
 public:
-	void Init(std::string path);
+	void Init(const std::string& path);
 	void Run();
 	void Draw();
 	bool IsRunning() const;
 private:
-	void InitObjects();
-	void MakeEventAction();
-	void MakeMove();
-	void TryChangeGameMode();
-	void TryChangeMap();
-	void LoadTextures();
-	void CreateMaps(const std::string& path);
-	bool IsPacmanCollision(Direction);
-	bool IsPacmanCollisionWithGhost();
 	void Restart();
+	void InitObjects();
+	void InitPacman();
+	void InitGhosts();
+	void CreateMaps(const std::string& path);
+	void LoadTextures();
+	void MakeMove();
+	void TryChangeMap();
+	void TryChangeGameMode();
+	void MakeEventAction();
+	bool IsPacmanCollision(Direction) const;
+	bool IsPacmanCollisionWithGhost() const;
 
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
@@ -35,7 +37,6 @@ private:
 	std::vector<Map> m_maps;
 	sf::Clock m_moveClock;
 	int m_mapNum = 0;
-	bool m_running = true;
-
 	size_t m_currentMap = 0;
+	bool m_running = true;
 };
