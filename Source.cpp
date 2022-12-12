@@ -20,5 +20,4 @@ int main(int argc, char** argv)
         game.Run();
     }
     return 0;
-    //zad dom dorobiæ kolizje z ghostami
 }
