@@ -1,5 +1,4 @@
 #include "Helper.h"
-#include "SFML/Graphics.hpp"
 
 namespace size
 {

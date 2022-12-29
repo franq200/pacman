@@ -19,7 +19,6 @@ public:
 private:
 	void Restart();
 	void InitObjects();
-	void InitPacman();
 	void InitGhosts();
 	void CreateMaps(const std::string& path);
 	void LoadTextures();

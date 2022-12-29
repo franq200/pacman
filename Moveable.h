@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-enum class Direction
+enum class Direction : std::uint8_t
 {
 	up = 0,
 	down,

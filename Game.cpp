@@ -45,15 +45,8 @@ void Game::Run()
 
 void Game::InitObjects()
 {
-	InitPacman();
+	m_pacman.Init(m_maps[m_mapNum].GetPacmanSpawn());
 	InitGhosts();
-}
-
-void Game::InitPacman()
-{
-	m_pacman.setPosition(m_maps[m_mapNum].GetPacmanSpawn());
-	m_pacman.setTexture(&textures::pacmanTexture);
-	m_pacman.setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
 }
 
 void Game::InitGhosts()
