@@ -22,6 +22,8 @@ namespace textures
 
 namespace position
 {
+	sf::Vector2f invalidPosition = { -1.f, -1.f };
+
 	std::pair<std::size_t, std::size_t> GetMapIndexesFromPosition(const sf::Vector2f& pos)
 	{
 		return { static_cast<size_t>(pos.x / size::cellSize), static_cast<size_t>(pos.y / size::cellSize) };

@@ -23,6 +23,8 @@ namespace textures
 
 namespace position
 {
+	extern sf::Vector2f invalidPosition;
+
 	std::pair<std::size_t, std::size_t> GetMapIndexesFromPosition(const sf::Vector2f&);
 	sf::Vector2f GetPositionFromMapIndexes(const std::pair<std::size_t, std::size_t>&);
 }

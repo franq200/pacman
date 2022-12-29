@@ -183,8 +183,11 @@ void Game::CreateMaps(const std::string& path)
 			std::regex regex("^map(\\d)+.txt$");
 			if (std::regex_search(fileName.string(), regex))
 			{
-				auto& newMap = m_maps.emplace_back();
-				newMap.ReadMap(file.path().string());
+				Map newMap;
+				if (newMap.ReadAndValidateMap(file.path().string()))
+				{
+					m_maps.push_back(newMap);
+				}
 			}
 		}
 	}

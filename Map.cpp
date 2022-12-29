@@ -28,7 +28,7 @@ bool Map::IsBlockedCell(std::size_t x, std::size_t y) const
 	return m_map[y][x].GetState() == State::blocked;
 }
 
-void Map::ReadMap(std::string path)
+bool Map::ReadAndValidateMap(std::string path)
 {
 	std::ifstream file;
 	file.open(path);
@@ -60,4 +60,9 @@ void Map::ReadMap(std::string path)
 		}
 		m_map.push_back(row);
 	}
+
+	if (m_map.size() < 2 || m_pacmanSpawn == position::invalidPosition)
+		return false;
+
+	return true;
 }
