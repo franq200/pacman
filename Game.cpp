@@ -4,6 +4,7 @@
 #include <regex>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 const std::string GameTitle = "Pacman";
 
@@ -247,14 +248,8 @@ bool Game::IsPacmanCollision(Direction direction) const
 
 bool Game::IsPacmanCollisionWithGhost() const
 {
-	for (int i = 0; i < m_ghosts.size(); ++i)
-	{
-		if (m_ghosts[i].getPosition() == m_pacman.getPosition())
-		{
-			return true;
-		}
-	}
-	return false;
+	sf::Vector2f pacmanPos = m_pacman.getPosition();
+	return std::any_of(m_ghosts.begin(), m_ghosts.end(), [pacmanPos](const auto& ghost) {return ghost.getPosition() == pacmanPos; });
 }
 
 void Game::Restart()
@@ -265,5 +260,4 @@ void Game::Restart()
 	{
 		m_ghosts[i].setPosition(ghostsSpawns[i]);
 	}
-
 }
