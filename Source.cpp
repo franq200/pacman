@@ -18,6 +18,6 @@ int main(int argc, char** argv)
     while (game.IsRunning())
     {
         game.Run();
-    }
+		}
     return 0;
 }

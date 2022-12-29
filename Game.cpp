@@ -81,7 +81,7 @@ void Game::MakeEventAction()
 void Game::Draw()
 {
 	m_window.clear();
-	m_maps[m_currentMap].Draw(m_window);
+	m_maps[m_mapNum].Draw(m_window);
 	if (m_gameState == GameState::playing)
 	{
 		for (int i = 0; i < m_ghosts.size(); ++i)

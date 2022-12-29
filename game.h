@@ -37,6 +37,5 @@ private:
 	std::vector<Map> m_maps;
 	sf::Clock m_moveClock;
 	int m_mapNum = 0;
-	size_t m_currentMap = 0;
 	bool m_running = true;
 };
