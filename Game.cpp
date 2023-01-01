@@ -143,25 +143,37 @@ void Game::TryChangeMap()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		if (m_mapNum == 0)
+		if (m_changeMap == true)
 		{
-			m_mapNum = static_cast<int>(m_maps.size() - 1);
-		}
-		else
-		{
-			m_mapNum--;
+			if (m_mapNum == 0)
+			{
+				m_mapNum = static_cast<int>(m_maps.size() - 1);
+			}
+			else
+			{
+				m_mapNum--;
+			}
+			m_changeMap = false;
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		if (m_mapNum == m_maps.size() - 1)
+		if (m_changeMap == true)
 		{
-			m_mapNum = 0;
+			if (m_mapNum == m_maps.size() - 1)
+			{
+				m_mapNum = 0;
+			}
+			else
+			{
+				m_mapNum++;
+			}
+			m_changeMap = false;
 		}
-		else
-		{
-			m_mapNum++;
-		}
+	}
+	else
+	{
+		m_changeMap = true;
 	}
 }
 
