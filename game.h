@@ -38,5 +38,4 @@ private:
 	int m_mapNum = 0;
 	bool m_running = true;
 	bool m_changeMap = true;
-	sf::Clock m_mapClock;
 };
