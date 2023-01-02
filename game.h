@@ -22,7 +22,8 @@ private:
 	void InitGhosts();
 	void CreateMaps(const std::string& path);
 	void LoadTextures();
-	void MakeMove();
+	void MakePacmanMove();
+	void MakeGhostsMove();
 	void TryChangeMap();
 	void TryChangeGameMode();
 	void MakeEventAction();
@@ -34,7 +35,7 @@ private:
 	Pacman m_pacman;
 	std::vector<Ghost> m_ghosts;
 	std::vector<Map> m_maps;
-	sf::Clock m_moveClock;
+	sf::Clock m_moveClock; // to do: refactoring
 	int m_mapNum = 0;
 	bool m_running = true;
 	bool m_changeMap = true;

@@ -12,6 +12,6 @@ enum class Direction : std::uint8_t
 class Moveable : public sf::RectangleShape
 {
 public:
-	void MakeMove(Direction direction);
+	void MakeMove(const Direction& direction);
 private:
 };

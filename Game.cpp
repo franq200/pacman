@@ -23,7 +23,8 @@ void Game::Run()
 	{
 	case GameState::playing:
 	{
-		MakeMove();
+		MakePacmanMove();
+		MakeGhostsMove();
 		if (IsPacmanCollisionWithGhost())
 		{
 			m_gameState = GameState::menu;
@@ -92,7 +93,7 @@ bool Game::IsRunning() const
 	return m_running;
 }
 
-void Game::MakeMove()
+void Game::MakePacmanMove()
 {
 	if (m_moveClock.getElapsedTime() > sf::milliseconds(speed::pacmanSpeed))
 	{
@@ -129,6 +130,12 @@ void Game::MakeMove()
 			}
 		}
 	}
+}
+
+void Game::MakeGhostsMove()
+{
+	for (auto& ghost : m_ghosts)
+		ghost.MakeMove();
 }
 
 void Game::TryChangeGameMode()

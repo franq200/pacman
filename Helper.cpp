@@ -11,7 +11,7 @@ namespace size
 namespace speed
 {
 	int pacmanSpeed = 175;
-	int ghostSpeed = 175;
+	int ghostSpeed = 350;
 }
 
 namespace textures

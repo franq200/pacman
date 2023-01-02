@@ -1,7 +1,7 @@
 #include "Moveable.h"
 #include "Helper.h"
 
-void Moveable::MakeMove(Direction direction)
+void Moveable::MakeMove(const Direction& direction)
 {
 	if (direction == Direction::up)
 	{
