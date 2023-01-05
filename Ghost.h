@@ -10,6 +10,8 @@ public:
 private:
 	sf::Clock m_moveClock;
 	std::vector<sf::Vector2f> m_pathToPacman;
+	int m_movesCounter = 0;
+	std::vector<sf::Vector2f> m_path;
 	// add vector<positons> another container??
 	// recalculate algorithm after 3 moves (counter)
 };

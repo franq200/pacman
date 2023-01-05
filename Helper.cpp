@@ -13,7 +13,7 @@ namespace size
 namespace speed
 {
 	int pacmanSpeed = 175;
-	int ghostSpeed = 350;
+	int ghostSpeed = 450;
 }
 
 namespace textures
@@ -84,9 +84,6 @@ namespace position
 				result.push_back({ static_cast<float>(currentIndex.first), static_cast<float>(currentIndex.second) });
 				currentIndex = { data[currentIndex.first][currentIndex.second].m_parentPos.first, data[currentIndex.first][currentIndex.second].m_parentPos.second };
 			}
-
-			std::reverse(result.begin(), result.end());
-
 			return result;
 		}
 	}

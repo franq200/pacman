@@ -13,12 +13,23 @@ void Ghost::MakeMove(const sf::Vector2f& pacmanPos, const std::vector<std::vecto
 {
 	if (m_moveClock.getElapsedTime() > sf::milliseconds(speed::ghostSpeed))
 	{
-		auto path = position::FindShortestPath(position::GetMapIndexesFromPosition(pacmanPos), position::GetMapIndexesFromPosition(getPosition()), map);
-		if (!path.empty())
+		if (m_movesCounter == 0)
 		{
-			setPosition(position::GetPositionFromMapIndexes({ static_cast<float>(path[0].x), static_cast<float>(path[0].y) }));
+			m_path = position::FindShortestPath(position::GetMapIndexesFromPosition(pacmanPos), position::GetMapIndexesFromPosition(getPosition()), map);
 		}
-
+		if (!m_path.empty())
+		{
+			setPosition(position::GetPositionFromMapIndexes({ static_cast<float>(m_path[m_path.size()-1].x), static_cast<float>(m_path[m_path.size() - 1].y)}));
+			m_path.pop_back();
+		}
+		if (m_movesCounter == 2)
+		{
+			m_movesCounter = 0;
+		}
+		else
+		{
+			m_movesCounter++;
+		}
 		m_moveClock.restart();
 	}
 }
