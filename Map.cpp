@@ -28,6 +28,24 @@ bool Map::IsBlockedCell(std::size_t x, std::size_t y) const
 	return m_map[y][x].GetState() == State::blocked;
 }
 
+std::vector<std::vector<bool>> Map::GetRawMap() const
+{
+	std::vector<std::vector<bool>> result;
+
+	for (const auto& row : m_map)
+	{
+		std::vector<bool> resultRow;
+		for (const auto& cell : row)
+		{
+			resultRow.push_back(cell.GetState() == State::free);
+		}
+
+		result.push_back(resultRow);
+	}
+
+	return result;
+}
+
 bool Map::ReadAndValidateMap(std::string path)
 {
 	std::ifstream file;

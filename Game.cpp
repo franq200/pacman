@@ -135,7 +135,7 @@ void Game::MakePacmanMove()
 void Game::MakeGhostsMove()
 {
 	for (auto& ghost : m_ghosts)
-		ghost.MakeMove();
+		ghost.MakeMove(m_pacman.getPosition(), m_maps[m_mapNum].GetRawMap());
 }
 
 void Game::TryChangeGameMode()

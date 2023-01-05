@@ -1,4 +1,6 @@
 #include "Helper.h"
+#include <algorithm>
+#include <iostream>
 
 namespace size
 {
@@ -22,39 +24,6 @@ namespace textures
 
 namespace position
 {
-	bool CheckMove(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map)
-	{
-		if (!(currentPos.first >= data.size() || currentPos.first < 0 || currentPos.second >= data.size() || currentPos.second < 0 || map[currentPos.first][currentPos.second] == false))
-		{
-			if (movePos == endPos)
-			{
-				data[movePos.first][movePos.second].m_parentPos = currentPos;
-				return false;
-			}
-			else
-			{
-				double lastCost = data[movePos.first][movePos.second].m_totalCost; // 11
-				if (currentData.m_moveCost + 1 + CalculateDistance(movePos, endPos) < lastCost)
-				{
-					data[movePos.first][movePos.second].m_moveCost = currentData.m_moveCost;
-					data[movePos.first][movePos.second].m_distanceCost = CalculateDistance(movePos, endPos);
-					data[movePos.first][movePos.second].m_totalCost = data[movePos.first][movePos.second].m_moveCost + data[movePos.first][movePos.second].m_distanceCost;
-					data[movePos.first][movePos.second].m_parentPos = currentPos;
-					openList.push_back(data[movePos.first][movePos.second]);
-				}
-				// newCost = moveCost + distanceCost;
-			}
-		}
-		return true;
-	}
-
-	double CalculateDistance(std::pair<int, int> start, std::pair<int, int> end)
-	{
-		double xPos = std::abs(start.first - end.first);
-		double yPos = std::abs(start.second - end.second);
-		return xPos + yPos;
-	}
-
 	sf::Vector2f invalidPosition = { -1.f, -1.f };
 
 	std::pair<std::size_t, std::size_t> GetMapIndexesFromPosition(const sf::Vector2f& pos)
@@ -67,7 +36,62 @@ namespace position
 		return sf::Vector2f(mapIndexes.first * static_cast<float>(size::cellSize), mapIndexes.second * static_cast<float>(size::cellSize));
 	}
 
-	std::vector<sf::Vector2f> FindShortestPath(std::pair <std::size_t, size_t> pacmanIndex, std::pair <std::size_t, size_t>  ghostIndex, std::vector<std::vector<bool>> map)
+	namespace
+	{
+		double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
+
+		bool CheckEndPos(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map)
+		{
+			if (!(currentPos.first >= data.size() || currentPos.first < 0 || currentPos.second >= data.size() || currentPos.second < 0 || map[currentPos.second][currentPos.first] == false))
+			{
+				if (movePos == endPos)
+				{
+					data[movePos.first][movePos.second].m_parentPos = currentPos;
+					return false;
+				}
+				else
+				{
+					double lastCost = data[movePos.first][movePos.second].m_totalCost; // 11
+					if (currentData.m_moveCost + 1 + CalculateDistance(movePos, endPos) < lastCost)
+					{
+						data[movePos.first][movePos.second].m_moveCost = currentData.m_moveCost;
+						data[movePos.first][movePos.second].m_distanceCost = CalculateDistance(movePos, endPos);
+						data[movePos.first][movePos.second].m_totalCost = data[movePos.first][movePos.second].m_moveCost + data[movePos.first][movePos.second].m_distanceCost;
+						data[movePos.first][movePos.second].m_parentPos = currentPos;
+						openList.push_back(data[movePos.first][movePos.second]);
+					}
+					// newCost = moveCost + distanceCost;
+				}
+			}
+			return true;
+		}
+
+		double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end)
+		{
+			double xPos = static_cast<double>(start.first) - end.first;
+			double yPos = static_cast<double>(start.second) - end.second;
+			return std::abs(xPos) + std::abs(yPos);
+		}
+
+		std::vector<sf::Vector2f> GetResult(std::vector<std::vector<AStarData>>& data, std::pair <std::size_t, size_t> pacmanIndex, std::pair <std::size_t, size_t> ghostIndex)
+		{
+			std::vector<sf::Vector2f> result;
+
+			auto currentIndex = pacmanIndex;
+
+			while (currentIndex != ghostIndex)
+			{
+				result.push_back({ static_cast<float>(currentIndex.first), static_cast<float>(currentIndex.second) });
+				currentIndex = { data[currentIndex.first][currentIndex.second].m_parentPos.first, data[currentIndex.first][currentIndex.second].m_parentPos.second };
+			}
+
+			std::reverse(result.begin(), result.end());
+
+			return result;
+		}
+	}
+
+	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>> map)
 	{
 		std::vector<AStarData> openList;
 
@@ -98,31 +122,31 @@ namespace position
 			std::pair<int, int> currentPos = currentData.m_pos;
 
 			std::pair<int, int> leftPos = { currentPos.first - 1, currentPos.second };
-			if (!CheckMove(cells, openList, endPos, leftPos, currentCell, currentCellPos))
+			if (!CheckEndPos(data, openList, pacmanIndex, leftPos, currentData, currentPos, map))
 			{
-				GetResult(cells, endPos, startPos);
-				break;
+				return GetResult(data, pacmanIndex, ghostIndex);
 			}
 
-			std::pair<int, int> rightPos = { currentCellPos.first + 1, currentCellPos.second };
-			if (!CheckMove(cells, openList, endPos, rightPos, currentCell, currentCellPos))
+			std::pair<int, int> rightPos = { currentPos.first + 1, currentPos.second };
+			if (!CheckEndPos(data, openList, pacmanIndex, rightPos, currentData, currentPos, map))
 			{
-				GetResult(cells, endPos, startPos);
-				break;
+				return GetResult(data, pacmanIndex, ghostIndex);
 			}
 
-			std::pair<int, int> upPos = { currentCellPos.first, currentCellPos.second - 1 };
-			if (!CheckMove(cells, openList, endPos, upPos, currentCell, currentCellPos))
+			std::pair<int, int> upPos = { currentPos.first, currentPos.second - 1 };
+			if (!CheckEndPos(data, openList, pacmanIndex, upPos, currentData, currentPos, map))
 			{
-				GetResult(cells, endPos, startPos);
-				break;
+				return GetResult(data, pacmanIndex, ghostIndex);
 			}
 
-			std::pair<int, int> downPos = { currentCellPos.first, currentCellPos.second + 1 };
-			if (!CheckMove(cells, openList, endPos, downPos, currentCell, currentCellPos))
+			std::pair<int, int> downPos = { currentPos.first, currentPos.second + 1 };
+			if (!CheckEndPos(data, openList, pacmanIndex, downPos, currentData, currentPos, map))
 			{
-				GetResult(cells, endPos, startPos);
-				break;
+				return GetResult(data, pacmanIndex, ghostIndex);
 			}
+		}
+
+		std::cout << "AStart algorithm return empty path";
+		return {};
 	}
 }

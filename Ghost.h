@@ -6,7 +6,7 @@ class Ghost : public Moveable
 {
 public:
 	void Init(const sf::Vector2f& ghostSpawn);
-	void MakeMove();
+	void MakeMove(const sf::Vector2f& pacmanPos, const std::vector<std::vector<bool>>& map);
 private:
 	sf::Clock m_moveClock;
 	std::vector<sf::Vector2f> m_pathToPacman;
