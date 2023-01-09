@@ -6,6 +6,8 @@
 #include <iostream>
 #include <algorithm>
 #include "Bonus.h"
+#include "Money.h"
+#include "Acceleration.h"
 
 const std::string GameTitle = "Pacman";
 
@@ -27,6 +29,7 @@ void Game::Run()
 	{
 		MakePacmanMove();
 		MakeGhostsMove();
+		UpdateBonuses();
 		if (IsPacmanCollisionWithGhost())
 		{
 			m_gameState = GameState::menu;
@@ -86,6 +89,10 @@ void Game::Draw()
 			m_window.draw(m_ghosts[i]);
 		}
 		m_window.draw(m_pacman);
+		for (int i = 0; i < m_bonuses.size(); ++i)
+		{
+			m_window.draw(*m_bonuses[i]);
+		}
 	}
 	m_window.display();
 }
@@ -295,12 +302,24 @@ void Game::UpdateBonuses()
 	if (m_bonusesClock.getElapsedTime() > sf::seconds(Bonus::m_spawnPeriod))
 	{
 		CreateBonus();
+		m_bonusesClock.restart();
 	}
 }
 
 void Game::CreateBonus()
 {
 	//auto pos = m_map.GetRandomFreePos(pacmanPos); pos > 5 kroków + pacmanPos
+	sf::Vector2f randomIndex = m_maps[m_mapNum].GetRandomFreePos(m_pacman.getPosition());
+	auto bonusPos = position::GetPositionFromMapIndexes({randomIndex.x, randomIndex.y});
+	if (position::RandomNum(0, 2) == 2)
+	{
+		m_bonuses.push_back(new Acceleration());
+	}
+	else
+	{
+		m_bonuses.push_back(new Money());
+	}
+	m_bonuses.back()->Init(bonusPos);
 
 	// to do
 }

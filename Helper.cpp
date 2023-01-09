@@ -47,8 +47,6 @@ namespace position
 
 	namespace
 	{
-		double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
-
 		bool CheckEndPos(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map)
 		{
 			if (!(currentPos.first >= data.size() || currentPos.first < 0 || currentPos.second >= data.size() || currentPos.second < 0 || map[currentPos.second][currentPos.first] == false))
@@ -75,13 +73,6 @@ namespace position
 			return true;
 		}
 
-		double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end)
-		{
-			double xPos = static_cast<double>(start.first) - end.first;
-			double yPos = static_cast<double>(start.second) - end.second;
-			return std::abs(xPos) + std::abs(yPos);
-		}
-
 		std::vector<sf::Vector2f> GetResult(std::vector<std::vector<AStarData>>& data, std::pair <std::size_t, size_t> pacmanIndex, std::pair <std::size_t, size_t> ghostIndex)
 		{
 			std::vector<sf::Vector2f> result;
@@ -95,6 +86,13 @@ namespace position
 			}
 			return result;
 		}
+	}
+
+	double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end)
+	{
+		double xPos = static_cast<double>(start.first) - end.first;
+		double yPos = static_cast<double>(start.second) - end.second;
+		return std::abs(xPos) + std::abs(yPos);
 	}
 
 	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>> map)

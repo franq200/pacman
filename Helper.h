@@ -39,6 +39,6 @@ namespace position
 	};
 
 	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>> map);
-	//double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
+	double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
 	//bool CheckEndPos(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map);
 }

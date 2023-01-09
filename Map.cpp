@@ -46,6 +46,23 @@ std::vector<std::vector<bool>> Map::GetRawMap() const
 	return result;
 }
 
+sf::Vector2f Map::GetRandomFreePos(sf::Vector2f pacmanPos)
+{
+	std::vector<sf::Vector2f> freePositions;
+	for (int y = 0; y < m_map.size(); ++y)
+	{
+		for (int x = 0; x < m_map[y].size(); ++x)
+		{
+			if (m_map[x][y].GetState() == State::free && position::CalculateDistance({ x, y }, {pacmanPos.x, pacmanPos.y}) > 4)
+			{
+				freePositions.push_back({ static_cast<float>(x), static_cast<float>(y) });
+			}
+		}
+	}
+	
+	return freePositions.at(position::RandomNum(0, freePositions.size() - 1));
+}
+
 bool Map::ReadAndValidateMap(std::string path)
 {
 	std::ifstream file;
