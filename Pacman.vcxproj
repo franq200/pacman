@@ -149,21 +149,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Acceleration.cpp" />
+    <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Money.cpp" />
     <ClCompile Include="Moveable.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Acceleration.h" />
+    <ClInclude Include="Bonus.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Money.h" />
     <ClInclude Include="Moveable.h" />
     <ClInclude Include="Pacman.h" />
   </ItemGroup>

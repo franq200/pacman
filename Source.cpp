@@ -20,5 +20,5 @@ int main(int argc, char** argv)
 		game.Run();
 	}
 	return 0;
-	//zad dom mo¿na spróbowaæ porobiæ a*
+	//zad dom bonusy (zabijanie ghostów, monety, przyspieszenie)
 }

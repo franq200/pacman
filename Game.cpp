@@ -276,3 +276,8 @@ void Game::Restart()
 		m_ghosts[i].setPosition(ghostsSpawns[i]);
 	}
 }
+
+void Game::CreateBonuses()
+{
+	
+}

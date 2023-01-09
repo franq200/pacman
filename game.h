@@ -2,6 +2,9 @@
 #include "Pacman.h"
 #include "Map.h"
 #include "Ghost.h"
+#include "Bonus.h"
+#include "Money.h"
+#include "Acceleration.h"
 
 enum class GameState : std::uint8_t
 {
@@ -18,6 +21,7 @@ public:
 	bool IsRunning() const;
 private:
 	void Restart();
+	void CreateBonuses();
 	void InitObjects();
 	void InitGhosts();
 	void CreateMaps(const std::string& path);
@@ -39,4 +43,5 @@ private:
 	int m_mapNum = 0;
 	bool m_running = true;
 	bool m_changeMap = true;
+	int m_score = 0;
 };

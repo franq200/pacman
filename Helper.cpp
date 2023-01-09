@@ -1,6 +1,7 @@
 #include "Helper.h"
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 namespace size
 {
@@ -13,7 +14,7 @@ namespace size
 namespace speed
 {
 	int pacmanSpeed = 175;
-	int ghostSpeed = 450;
+	int ghostSpeed = 375;
 }
 
 namespace textures
@@ -25,6 +26,14 @@ namespace textures
 namespace position
 {
 	sf::Vector2f invalidPosition = { -1.f, -1.f };
+
+	int RandomNum(int first, int last)
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> dist(first, last);
+		return dist(gen);
+	}
 
 	std::pair<std::size_t, std::size_t> GetMapIndexesFromPosition(const sf::Vector2f& pos)
 	{
