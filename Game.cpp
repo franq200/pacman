@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include "Bonus.h"
 
 const std::string GameTitle = "Pacman";
 
@@ -14,6 +15,7 @@ void Game::Init(const std::string& path)
 	CreateMaps(path);
 	LoadTextures();
 	InitObjects();
+	m_bonusesClock.restart();
 	m_window.setFramerateLimit(60);
 }
 
@@ -277,7 +279,28 @@ void Game::Restart()
 	}
 }
 
-void Game::CreateBonuses()
+void Game::UpdateBonuses()
 {
-	
+	for (auto it = m_bonuses.begin(); it != m_bonuses.end();)
+	{
+		if (!((*it)->IsAlive()))
+		{
+			delete *it; // *it == Bonus* [it == Bonus**]
+			it = m_bonuses.erase(it);
+		}
+		else
+			++it;
+	}
+
+	if (m_bonusesClock.getElapsedTime() > sf::seconds(Bonus::m_spawnPeriod))
+	{
+		CreateBonus();
+	}
+}
+
+void Game::CreateBonus()
+{
+	//auto pos = m_map.GetRandomFreePos(pacmanPos); pos > 5 kroków + pacmanPos
+
+	// to do
 }

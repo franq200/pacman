@@ -2,9 +2,9 @@
 #include "Pacman.h"
 #include "Map.h"
 #include "Ghost.h"
-#include "Bonus.h"
-#include "Money.h"
-#include "Acceleration.h"
+//#include "Bonus.h"
+
+class Bonus;
 
 enum class GameState : std::uint8_t
 {
@@ -21,7 +21,7 @@ public:
 	bool IsRunning() const;
 private:
 	void Restart();
-	void CreateBonuses();
+	void UpdateBonuses();
 	void InitObjects();
 	void InitGhosts();
 	void CreateMaps(const std::string& path);
@@ -33,13 +33,16 @@ private:
 	void MakeEventAction();
 	bool IsPacmanCollision(Direction) const;
 	bool IsPacmanCollisionWithGhost() const;
+	void CreateBonus();
 
 	GameState m_gameState = GameState::menu;
 	sf::RenderWindow m_window;
 	Pacman m_pacman;
 	std::vector<Ghost> m_ghosts;
 	std::vector<Map> m_maps;
+	std::vector<Bonus*> m_bonuses;
 	sf::Clock m_moveClock; // to do: refactoring
+	sf::Clock m_bonusesClock;
 	int m_mapNum = 0;
 	bool m_running = true;
 	bool m_changeMap = true;

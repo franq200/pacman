@@ -5,5 +5,9 @@ class Bonus : public sf::RectangleShape
 {
 public:
 	void virtual Init(sf::Vector2f pos) = 0;
-private:
+	bool IsAlive() const;
+
+	static const unsigned m_spawnPeriod = 30;
+protected:
+	sf::Clock m_expiredClock;
 };
