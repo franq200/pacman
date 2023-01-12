@@ -8,18 +8,30 @@ void Pacman::Init(const sf::Vector2f& pacmanSpawn)
 	setSize({ size::cellSize - size::cellOutlineThickness, size::cellSize - size::cellOutlineThickness });
 }
 
-void Pacman::SetSpeed(bool speed)
+void Pacman::SpeedUp()
 {
+	/*
 	if(m_speedClock.getElapsedTime() == sf::seconds(4) && speed::pacmanSpeed == 100.f)
 	{
 		speed::pacmanSpeed = 175.f;
 	}
-	else if (speed && speed::pacmanSpeed != 100.f)
+	*/
+	if (speed::pacmanSpeed != 100.f)
 	{
 		speed::pacmanSpeed = 100.f;
 		m_speedClock.restart();
 	}
+	/*
 	else
+	{
+		speed::pacmanSpeed = 175.f;
+	}
+	*/
+}
+
+void Pacman::TryChangeSpeed()
+{
+	if (m_speedClock.getElapsedTime() >= sf::seconds(3) && speed::pacmanSpeed == 100.f)
 	{
 		speed::pacmanSpeed = 175.f;
 	}

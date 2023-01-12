@@ -8,3 +8,8 @@ void Money::Init(sf::Vector2f pos)
 	setPosition(pos);
 	m_expiredClock.restart();
 }
+
+void Money::MakeAction(Pacman& pacman)
+{
+	m_score++;
+}
