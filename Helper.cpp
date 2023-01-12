@@ -95,7 +95,7 @@ namespace position
 		return std::abs(xPos) + std::abs(yPos);
 	}
 
-	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>> map)
+	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>>& map)
 	{
 		std::vector<AStarData> openList;
 
