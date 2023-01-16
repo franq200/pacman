@@ -29,6 +29,9 @@ namespace position
 	std::pair<std::size_t, std::size_t> GetMapIndexesFromPosition(const sf::Vector2f&);
 	sf::Vector2f GetPositionFromMapIndexes(const std::pair<std::size_t, std::size_t>&);
 
+	double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
+
+	/*
 	struct AStarData
 	{
 		double m_totalCost = std::numeric_limits<double>::max();
@@ -40,5 +43,6 @@ namespace position
 
 	std::vector<sf::Vector2f> FindShortestPath(const std::pair <std::size_t, size_t>& pacmanIndex, const std::pair <std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>>& map);
 	double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end);
+	*/
 	//bool CheckEndPos(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map);
 }

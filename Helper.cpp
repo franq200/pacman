@@ -45,6 +45,14 @@ namespace position
 		return sf::Vector2f(mapIndexes.first * static_cast<float>(size::cellSize), mapIndexes.second * static_cast<float>(size::cellSize));
 	}
 
+	double CalculateDistance(std::pair<size_t, size_t> start, std::pair<size_t, size_t> end)
+	{
+		double xPos = static_cast<double>(start.first) - end.first;
+		double yPos = static_cast<double>(start.second) - end.second;
+		return std::abs(xPos) + std::abs(yPos);
+	}
+
+	/*
 	namespace
 	{
 		bool CheckEndPos(std::vector<std::vector<AStarData>>& data, std::vector<AStarData>& openList, std::pair<int, int> endPos, std::pair<int, int> movePos, AStarData currentData, std::pair<int, int> currentPos, std::vector<std::vector<bool>> map)
@@ -153,4 +161,5 @@ namespace position
 		std::cout << "AStart algorithm return empty path";
 		return {};
 	}
+	*/
 }

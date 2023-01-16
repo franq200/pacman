@@ -1,8 +1,9 @@
 #pragma once
 #include "Moveable.h"
 #include "SFML/System.hpp"
+#include "AStar.h"
 
-class Ghost : public Moveable
+class Ghost : public Moveable, public AStar
 {
 public:
 	void Init(const sf::Vector2f& ghostSpawn);

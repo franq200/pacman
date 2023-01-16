@@ -15,7 +15,7 @@ void Ghost::MakeMove(const sf::Vector2f& pacmanPos, const std::vector<std::vecto
 	{
 		if (m_movesCounter == 0)
 		{
-			m_path = position::FindShortestPath(position::GetMapIndexesFromPosition(pacmanPos), position::GetMapIndexesFromPosition(getPosition()), map);
+			m_path = FindShortestPath(position::GetMapIndexesFromPosition(pacmanPos), position::GetMapIndexesFromPosition(getPosition()), map);
 		}
 		if (!m_path.empty())
 		{

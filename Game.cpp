@@ -288,8 +288,6 @@ void Game::Restart()
 
 void Game::UpdateBonuses()
 {
-	
-
 	for (auto it = m_bonuses.begin(); it != m_bonuses.end();)
 	{
 		m_pacman.TryChangeSpeed();
@@ -315,7 +313,7 @@ void Game::CreateBonus()
 	//auto pos = m_map.GetRandomFreePos(pacmanPos); pos > 5 kroków + pacmanPos
 	sf::Vector2f randomIndex = m_maps[m_mapNum].GetRandomFreePos(m_pacman.getPosition());
 	auto bonusPos = position::GetPositionFromMapIndexes({randomIndex.y, randomIndex.x});
-	if (/*position::RandomNum(0, 2) == 2*/ true)
+	if (position::RandomNum(0, 2) == 2)
 	{
 		m_bonuses.push_back(new Acceleration());
 	}

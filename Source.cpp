@@ -20,5 +20,5 @@ int main(int argc, char** argv)
 		game.Run();
 	}
 	return 0;
-	//zad dom bonusy ulepszyæ
+	//zad dom na dsc
 }
