@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <optional>
+#include <set>
 
 class AStar
 {
@@ -16,7 +17,7 @@ private:
 		std::pair <std::size_t, std::size_t> m_parentPos = { -1, -1 };
 		std::pair <std::size_t, std::size_t> m_pos = { 0, 0 };
 	};
-	std::vector<AStarData> m_openList;
+	std::set < AStarData, decltype([](AStarData first, AStarData second) {return first.m_totalCost < second.m_totalCost; }) > m_openList;
 
 	std::optional< std::vector<sf::Vector2f>> ChooseDirection(const AStarData& currentData, std::vector<std::vector<AStarData>>& data, const std::pair<std::size_t, size_t>& pacmanIndex, const std::pair<std::size_t, size_t>& ghostIndex, const std::vector<std::vector<bool>>& map);
 

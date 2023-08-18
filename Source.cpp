@@ -19,6 +19,8 @@ int main(int argc, char** argv)
 	{
 		game.Run();
 	}
+
 	return 0;
-	//zad dom na dsc
+	//implementacja drzewa czerwono-czarnego, binarne drzewo poszukiwañ
+	//zad dom dsc
 }

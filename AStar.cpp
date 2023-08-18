@@ -24,13 +24,13 @@ std::vector<sf::Vector2f> AStar::FindShortestPath(const std::pair<std::size_t, s
 
 	data[ghostIndex.first][ghostIndex.second].m_distanceCost = position::CalculateDistance(pacmanIndex, ghostIndex);
 	data[ghostIndex.first][ghostIndex.second].m_totalCost = data[ghostIndex.first][ghostIndex.second].m_moveCost + data[ghostIndex.first][ghostIndex.second].m_distanceCost;
-	m_openList.push_back(data[ghostIndex.first][ghostIndex.second]);
+	m_openList.insert(data[ghostIndex.first][ghostIndex.second]);
 
 	while (!m_openList.empty())
 	{
-		std::sort(m_openList.begin(), m_openList.end(), [](const auto& first, const auto& second) {return first.m_totalCost > second.m_totalCost; }); // std::set O(n2), O(n), O(logn), O(1)
-		AStarData currentData = m_openList.back();
-		m_openList.pop_back();
+		//std::sort(m_openList.begin(), m_openList.end(), [](const auto& first, const auto& second) {return first.m_totalCost > second.m_totalCost; }); // std::set O(n2), O(n), O(logn), O(1)
+		AStarData currentData = *m_openList.begin();
+		m_openList.erase(m_openList.begin());
 
 		std::optional< std::vector<sf::Vector2f>> direction = ChooseDirection(currentData, data, pacmanIndex, ghostIndex, map);
 		if (direction.has_value())
@@ -92,7 +92,7 @@ bool AStar::CheckEndPos(std::vector<std::vector<AStarData>>& data, std::pair<int
 				data[movePos.first][movePos.second].m_totalCost = data[movePos.first][movePos.second].m_moveCost + data[movePos.first][movePos.second].m_distanceCost;
 				data[movePos.first][movePos.second].m_parentPos = currentPos;
 
-				m_openList.push_back(data[movePos.first][movePos.second]);
+				m_openList.insert(data[movePos.first][movePos.second]);
 			}
 		}
 	}
